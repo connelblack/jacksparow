@@ -1,0 +1,42 @@
+def vaccine():
+    import requests
+    import time
+    from playsound import playsound
+    import datetime
+    dist = 307
+    import datetime
+    # x= datetime.date.today()
+    # date=print(x.day,'-',x.month,'-',x.year)
+    a = input('enter the date in: dd-month-year format')
+    date = a
+    print('THE DATE IS:', date)
+    URL = 'https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByDistrict?district_id={}&date={}'.format(
+        dist, date)
+
+    header = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.76 Safari/537.36'}
+
+    def findAvailability():
+        counter = 0
+        result = requests.get(URL, headers=header)
+        response_json = result.json()
+        data = response_json["sessions"]
+        for each in data:
+            if ((each["available_capacity"] > 0) & (each["min_age_limit"] >= 18)):
+                counter += 1
+                print("name of the hospital is:", each["name"])
+                print("the pincode of the hospital is:", each["pincode"])
+                print("name of the vaccine is:", each["vaccine"])
+                print("no of slots avilabele:", each["available_capacity"])
+                 #playsound("")
+                return True
+        if (counter == 0):
+            print("No Available Slots")
+            return False
+
+    while (findAvailability() != True):
+       print('thank you')
+
+x=input("enter the keyword vaccine")
+if x:= "vacine":
+    print(vaccine())
